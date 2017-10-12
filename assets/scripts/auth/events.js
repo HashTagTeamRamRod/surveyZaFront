@@ -16,8 +16,6 @@ const onSignIn = function (event) {
   event.preventDefault()
   api.signIn(data)
     .then(ui.signInSuccess)
-    .then(api.getNotes)
-    .then(checkGet)
     .catch(ui.signInFailure)
 }
 const onChangePassword = function (event) {
@@ -42,7 +40,6 @@ const addHandlers = function () {
   $('#sign-in').on('submit', onSignIn)
   $('#change-password').on('submit', onChangePassword)
   $('#sign-out').on('submit', onSignOut)
-
 }
 
 module.exports = {

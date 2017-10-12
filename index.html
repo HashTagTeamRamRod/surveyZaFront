@@ -2,6 +2,8 @@
 <html>
     <head>
       <title>¡surveyZa!</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel = "stylesheet" type = "text/css" href = "./assets/styles/index.scss" />
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <!-- Do not add `link` tags-->
@@ -12,8 +14,57 @@
       <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
     </head>
     <body class="container-fluid">
-      <h1>Welcome to ¡surveySa!</h1>
+      <h1>Welcome to ¡surveyZa!</h1>
+      <p id="message"></p>
+<!-- auth -->
+      <form id="sign-up" class="clearform">
+          <fieldset>
+            <legend>Sign Up!</legend>
+            <input name="credentials[email]" type="text" placeholder="Email address">
+            <input name="credentials[password]" type="password" placeholder="Password">
+            <input name="credentials[password_confirmation]" type="password" placeholder="Confirm Password">
+            <input type="submit" name="submit" value="Sign up!">
+          </fieldset>
+        </form>
+        <form id="sign-in" class="clearform">
+          <fieldset>
+            <legend>Sign In!</legend>
+            <input name="credentials[email]" type="text" placeholder="Email">
+            <input name="credentials[password]" type="password" placeholder="Password">
+            <input type="submit" name="submit" value="Sign in!">
+          </fieldset>
+        </form>
+        <form id="sign-out" class="clearform">
+          <fieldset>
+            <legend>Sign Out</legend>
+            <input type="submit" name="submit" value="Sign out">
+          </fieldset>
+        </form>
+        <form id="change-password" class="clearform">
+          <fieldset>
+            <legend>Change Password</legend>
+            <input type="password" name="passwords[old]" id="change-password-old" placeholder="Old Password">
+            <input type="password" name="passwords[new]" id="change-password-new" placeholder="New Password">
+            <input type="submit" name="submit" value="Change Password!">
+          </fieldset>
+        </form>
+<div class="dash">
+  <button class="get-surveys">Get Surveys</button>
+</div>
+        {{#each survey.questions as |question|}}
+        <form data-id="{{survey.id}}">
+          {{survey.question}}
+          <input type="radio" name="responses[answer1]" value="true">{{survey.questions.responses.answer1}}<br>
+          <input type="radio" name="responses[answer2]" value="false">{{survey.questions.responses.answer2}}<br>
+          <input type="submit" name="submit" value="Submit!">
+          <button class="cancel-survey"> cancel</button>
+          <button class="edit-survey">edit</button></table>
+          </form>
+        {{/each}}
 
-      <p></p>
+        <td>{{userlanguage.id}}</td>
+          <td>{{userlanguage.language.name}}</td>
+          <td>{{userlanguage.level}}</td>
+          <td>{{userlanguage.user.name}}
     </body>
 </html>
