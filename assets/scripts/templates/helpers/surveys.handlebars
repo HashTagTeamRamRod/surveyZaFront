@@ -1,16 +1,10 @@
 {{#each survey.questions as |question|}}
 <form data-id="{{survey.id}}">
   {{survey.question}}
-  <table>
-  <input type="radio" name="responses[answer1]" value="true"><td>{{survey.questions.responses.answer1}}</td><br>
-  <input type="radio" name="responses[answer2]" value="false">{{survey.questions.responses.answer2}}<br>
+  <input type="radio" name="responses[answer1]" value="true">{{survey.questions.responses.answer1}}<br>
+  <input type="radio" name="responses[answer2]" value="false">{{survey.questions.responses.answer2}}><br>
   <input type="submit" name="submit" value="Submit!">
   <button class="cancel-survey"> cancel</button>
   <button class="edit-survey">edit</button></table>
   </form>
 {{/each}}
-
-<td>{{userlanguage.id}}</td>
-  <td>{{userlanguage.language.name}}</td>
-  <td>{{userlanguage.level}}</td>
-  <td>{{userlanguage.user.name}}

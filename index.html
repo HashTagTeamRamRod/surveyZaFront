@@ -48,23 +48,30 @@
             <input type="submit" name="submit" value="Change Password!">
           </fieldset>
         </form>
+        <button class="get-surveys">Get Surveys</button>
 <div class="dash">
-  <button class="get-surveys">Get Surveys</button>
-</div>
-        {{#each survey.questions as |question|}}
-        <form data-id="{{survey.id}}">
-          {{survey.question}}
-          <input type="radio" name="responses[answer1]" value="true">{{survey.questions.responses.answer1}}<br>
-          <input type="radio" name="responses[answer2]" value="false">{{survey.questions.responses.answer2}}<br>
-          <input type="submit" name="submit" value="Submit!">
-          <button class="cancel-survey"> cancel</button>
-          <button class="edit-survey">edit</button></table>
-          </form>
-        {{/each}}
-
-        <td>{{userlanguage.id}}</td>
-          <td>{{userlanguage.language.name}}</td>
-          <td>{{userlanguage.level}}</td>
-          <td>{{userlanguage.user.name}}
+<!-- form to make survey title -->
+<div class="creates">
+          Input title here to create a survey.
+        <form class="create-a-survey" id="create-a-survey">
+        <div class="form-group">
+          <input type="text" name="survey[title]" id="new_question" placeholder="Title"><br>
+          <button type="submit" class="btn btn-default">Submit!</button>
+        </div>
+        </form>
+      </div>
+<!-- form to update questions and answers -->
+<div class="update-survey">
+          Enter questions and answers.
+        <form class="auth" id="update-survey">
+        <div class="form-group">
+          <input type="text" name="survey[questions][0][content]" id="new_question" placeholder="Question"><br>
+          <input type="text" name="survey[questions][0][responses][answer1]" id="new_answer1" placeholder="Answer 1"><br>
+          <input type="text" name="survey[questions][responses][answer2]" id="new_anser2" placeholder="Answer 2">
+          <input type="submit" class="btn btn-default">Submit!</input>
+        </div>
+        </form>
+      </div>
+      </div>
     </body>
 </html>

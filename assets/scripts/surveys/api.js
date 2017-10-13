@@ -12,9 +12,9 @@ const create = function (data) {
     data
   })
 }
-const update = function (id, data) {
+const update = function (surveyId, data) {
   return $.ajax({
-    url: config.apiOrigin + '/surveys/' + id,
+    url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'PATCH',
     headers: {
       Authorization: 'Token token=' + store.user.token
