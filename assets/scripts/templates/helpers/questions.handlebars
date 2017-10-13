@@ -1,0 +1,7 @@
+<p data-id="{{question.id}}">
+  <h4>{{question.content}}</h4>
+  {{#each question.responses as |response|}}
+  {{> responses response=response}}
+  {{/each}}
+
+</p>
