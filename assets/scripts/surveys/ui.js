@@ -4,9 +4,26 @@ const store = require('../store')
 
 const getSuccess = function (data) {
   $('.feed').text(null)
-  // console.log('data is ', JSON.stringify(data.surveys))
+  console.log('data is ', data)
+  console.log(this)
+  console.log(store.user.id)
   const showSurveyHTML = showSurveyTemplate({ surveys: data.surveys })
   $('.feed').append(showSurveyHTML)
+  // checkUser(data)
+}
+const checkUser = function (data) {
+  const userId = store.user.id
+  for (let i = 0; i < data.surveys.length; i++) {
+    if (data.surveys[i]._owner === userId) {
+      $(`[data-id="${data.surveys[i].id}"].edits-survey`).show()
+      console.log('message')
+      console.log('this is ', this)
+    } else {
+      console.log('hidden')
+      $(`[data-id="${data.surveys[i].id}"].edits-survey`).hide()
+        console.log('this is ', this)
+    }
+  }
 }
 
 const createSuccess = function (data) {
@@ -33,5 +50,6 @@ module.exports = {
   getSuccess,
   createSuccess,
   failure,
-  updateSuccess
+  updateSuccess,
+  checkUser
 }

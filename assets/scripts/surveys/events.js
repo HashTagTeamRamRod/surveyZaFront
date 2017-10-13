@@ -6,7 +6,10 @@ const store = require('../store')
 const onGetSuccess = (event) => {
   event.preventDefault()
   api.index()
-    .then(ui.getSuccess)
+    .then((data) => {
+      ui.getSuccess(data)
+      ui.checkUser(data)
+    })
     .catch(ui.failure)
 }
 
