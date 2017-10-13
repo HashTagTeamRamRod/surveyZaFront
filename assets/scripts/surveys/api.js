@@ -37,9 +37,9 @@ const show = function (id) {
     method: 'GET'
   })
 }
-const destroy = function (id) {
+const destroy = function (surveyId, data) {
   return $.ajax({
-    url: config.apiOrigin + '/surveys/' + id,
+    url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'DELETE',
     headers: {
       Authorization: 'Token token=' + store.user.token
