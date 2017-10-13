@@ -1,5 +1,6 @@
 const showSurveyTemplate = require('../templates/helpers/surveys.handlebars')
 const createSurveyTemplate = require('../templates/helpers/makesurvey.handlebars')
+const store = require('../store')
 
 const getSuccess = function (data) {
   $('.dash').text(null)
@@ -12,6 +13,8 @@ const getSuccess = function (data) {
 const createSuccess = function (data) {
   console.log('id is ', data.survey.id)
   // $('.dash').text(null)
+  const surveyId = data.survey.id
+  store.surveyId = surveyId
   $('.update-survey').show()
 }
 

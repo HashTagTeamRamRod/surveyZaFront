@@ -12,9 +12,8 @@ const onGetSuccess = (event) => {
 
 const onCreateSuccess = (event) => {
   event.preventDefault()
-  console.log('data is ', event)
   const data = getFormFields(event.target)
-  // store.survey.id = data.id
+  console.log('data is ', data)
   api.create(data)
     .then(ui.createSuccess)
     .catch(ui.failure)
@@ -25,7 +24,6 @@ const onUpdateSuccess = (event) => {
   const data = getFormFields(event.target)
   console.log(data)
   const surveyId = store.surveyId
-  console.log('surveyID is', store.surveyId)
   api.update(surveyId, data)
     .then(ui.updateSuccess)
     .catch(ui.failure)
