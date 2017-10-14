@@ -46,8 +46,7 @@ const onShowSuccess = (event) => {
 
 const onDestroySurvey = function (event) {
   event.preventDefault()
-  const surveyId = store.surveyId
-  console.log('id is ', surveyId)
+  const surveyId = $(this).attr('data-id')
   api.destroy(surveyId)
     .then(ui.deleteSuccess)
     .catch(ui.failure)

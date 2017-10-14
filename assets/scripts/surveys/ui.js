@@ -6,7 +6,6 @@ const api = require('./api')
 const getSuccess = function (data) {
   $('.feed').text(null)
   console.log('data is ', data)
-  console.log(this)
   console.log(store.user.id)
   const showSurveyHTML = showSurveyTemplate({ surveys: data.surveys })
   $('.feed').append(showSurveyHTML)
@@ -35,7 +34,6 @@ const createSuccess = function (data) {
 }
 
 const deleteSuccess = function (event) {
-    event.preventDefault()
   $('#message').text('Deleted survey!').fadeIn().delay(4000).fadeOut()
   api.index()
     .then((data) => {
