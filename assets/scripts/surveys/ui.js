@@ -3,17 +3,19 @@ const createSurveyTemplate = require('../templates/helpers/makesurvey.handlebars
 const store = require('../store')
 const api = require('./api')
 
-const getSuccess = function (data) {
+const getSuccess = function(data) {
   $('.feed').text(null)
   console.log('data is ', data)
   console.log(store.user.id)
-  const showSurveyHTML = showSurveyTemplate({ surveys: data.surveys })
+  const showSurveyHTML = showSurveyTemplate({
+    surveys: data.surveys
+  })
   $('.feed').append(showSurveyHTML)
   $('.edits-survey').on('click', onEditSurvey)
 
   // checkUser(data)
 }
-const checkUser = function (data) {
+const checkUser = function(data) {
   const userId = store.user.id
   for (let i = 0; i < data.surveys.length; i++) {
     if (data.surveys[i]._owner === userId) {
@@ -27,24 +29,72 @@ const checkUser = function (data) {
 }
 
 // <-----  edit survey event for showing form ---->
-const onEditSurvey = function (event) {
+const onEditSurvey = function(event) {
   event.preventDefault()
   const surveyTitle = $(this).siblings()[0]
-  const questionTitle = $(this).siblings()[1]
+  const question = $(this).siblings()[1]
   const response1 = $(this).siblings()[3]
   const response2 = $(this).siblings()[5]
   console.log(surveyTitle)
-  console.log(questionTitle)
+  console.log(question)
   console.log(response1)
   console.log(response2)
   const surveyId = $(this).attr('data-id')
   console.log(surveyId)
-//   const responseOne = $(this).parent().siblings()[1]
-//   const responseTwo =
+  surveyTitle.contentEditable = true
+  question.contentEditable = true
+  response1.contentEditable = true
+  response2.contentEditable = true
+  $('.vote').hide()
+  $('.reset').hide()
+  $('.edits-survey').hide()
+  $('.delete-survey').hide()
+  $(this).parent().append('<button class="edit-survey">Confirm Edit</button>')
+  $(this).parent().append('<button class="edit-cancel">Cancel Edit</button>')
+
+  $('.edit-cancel').on('click', function(event) {
+    // clearTable()
+    $(this).parent().parent().append()
+    $('.edit-cancel').hide()
+    // $('#collapseNotesButton').hide()
+    api.index()
+      .then((data) => {
+        getSuccess(data)
+        checkUser(data)
+      })
+      .catch(failure)
+  })
+  $('.edit-survey').on('click', function(event) {
+    onSurveyEdit(surveyId, surveyTitle, question, response1, response2)
+  })
 }
+
+const onSurveyEdit = function(surveyId, surveyTitle, question, response1, response2) {
+  const newTitle = $(surveyTitle).html()
+  const newQuestion = $(question).html()
+  const newResponse1 = $(response1).html()
+  const newResponse2 = $(response2).html()
+  const data = {
+    surveys: {
+      title: newTitle,
+      questions: {
+        content: newQuestion,
+        responses: {
+          answer1: newResponse1,
+          answer2: newResponse2
+        }
+      }
+    }
+  }
+
+  api.update(surveyId, data)
+    .then(editSuccess)
+    .catch(failure)
+}
+
 // <-----  edit survey event for showing form ---->
 
-const createSuccess = function (data) {
+const createSuccess = function(data) {
   console.log('id is ', data.survey._id)
   // $('.dash').text(null)
   const surveyId = data.survey._id
@@ -52,22 +102,39 @@ const createSuccess = function (data) {
   $('.update-survey').show()
 }
 
-const deleteSuccess = function (event) {
+const editSuccess = function(event) {
+  $('#message').text('Updated survey!').fadeIn().delay(4000).fadeOut()
+  api.index()
+    .then((data) => {
+      getSuccess(data)
+      checkUser(data)
+    })
+    .catch(editFailure)
+}
+
+const deleteSuccess = function(event) {
   $('#message').text('Deleted survey!').fadeIn().delay(4000).fadeOut()
   api.index()
     .then((data) => {
       getSuccess(data)
       checkUser(data)
-  })
-  .catch(updateFailure)
+    })
+    .catch(updateFailure)
 }
 
-const updateSuccess = function (data) {
+const updateSuccess = function(data) {
   console.log('this is ui', data)
+  $('#message').text('Survey added!').fadeIn().delay(4000).fadeOut()
 }
 
-const updateFailure = function (data) {
+const updateFailure = function(data) {
   console.log('error is', data)
+  $('#message').text('Update failed!').fadeIn().delay(4000).fadeOut()
+}
+
+const editFailure = function(data) {
+  console.log('error is', data)
+  $('#message').text('Edit failed!').fadeIn().delay(4000).fadeOut()
 }
 
 const failure = (data) => {
