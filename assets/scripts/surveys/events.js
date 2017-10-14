@@ -80,6 +80,7 @@ const addHandlers = () => {
   $('.clear-surveys').on('click', onClear)
   // $('.delete-survey').on('click', onDestroySurvey)
   $('.feed').on('click', '.delete-survey', onDestroySurvey)
+  // $('.feed').on('click', '.edits-survey', onEditSurvey)
   // $(`[data-id="${data.surveys.id}"].delete-survey`).on('click', onDestroySurvey)
 }
 module.exports = {

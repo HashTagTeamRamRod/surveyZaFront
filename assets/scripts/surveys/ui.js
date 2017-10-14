@@ -9,6 +9,7 @@ const getSuccess = function (data) {
   console.log(store.user.id)
   const showSurveyHTML = showSurveyTemplate({ surveys: data.surveys })
   $('.feed').append(showSurveyHTML)
+  $('.edits-survey').on('click', onEditSurvey)
 
   // checkUser(data)
 }
@@ -24,6 +25,24 @@ const checkUser = function (data) {
     }
   }
 }
+
+// <-----  edit survey event for showing form ---->
+const onEditSurvey = function (event) {
+  event.preventDefault()
+  const surveyTitle = $(this).siblings()[0]
+  const questionTitle = $(this).siblings()[1]
+  const response1 = $(this).siblings()[3]
+  const response2 = $(this).siblings()[5]
+  console.log(surveyTitle)
+  console.log(questionTitle)
+  console.log(response1)
+  console.log(response2)
+  const surveyId = $(this).attr('data-id')
+  console.log(surveyId)
+//   const responseOne = $(this).parent().siblings()[1]
+//   const responseTwo =
+}
+// <-----  edit survey event for showing form ---->
 
 const createSuccess = function (data) {
   console.log('id is ', data.survey._id)
