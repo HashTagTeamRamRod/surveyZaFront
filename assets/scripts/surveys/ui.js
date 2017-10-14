@@ -1,6 +1,7 @@
 const showSurveyTemplate = require('../templates/helpers/surveys.handlebars')
 const createSurveyTemplate = require('../templates/helpers/makesurvey.handlebars')
 const store = require('../store')
+const api = require('./api')
 
 const getSuccess = function (data) {
   $('.feed').text(null)
@@ -9,6 +10,7 @@ const getSuccess = function (data) {
   console.log(store.user.id)
   const showSurveyHTML = showSurveyTemplate({ surveys: data.surveys })
   $('.feed').append(showSurveyHTML)
+
   // checkUser(data)
 }
 const checkUser = function (data) {
@@ -16,12 +18,10 @@ const checkUser = function (data) {
   for (let i = 0; i < data.surveys.length; i++) {
     if (data.surveys[i]._owner === userId) {
       $(`[data-id="${data.surveys[i].id}"].edits-survey`).show()
-      console.log('message')
-      console.log('this is ', this)
+      $(`[data-id="${data.surveys[i].id}"].delete-survey`).show()
     } else {
-      console.log('hidden')
       $(`[data-id="${data.surveys[i].id}"].edits-survey`).hide()
-        console.log('this is ', this)
+      $(`[data-id="${data.surveys[i].id}"].delete-survey`).hide()
     }
   }
 }
@@ -32,6 +32,17 @@ const createSuccess = function (data) {
   const surveyId = data.survey._id
   store.surveyId = surveyId
   $('.update-survey').show()
+}
+
+const deleteSuccess = function (event) {
+    event.preventDefault()
+  $('#message').text('Deleted survey!').fadeIn().delay(4000).fadeOut()
+  api.index()
+    .then((data) => {
+      getSuccess(data)
+      checkUser(data)
+  })
+  .catch(updateFailure)
 }
 
 const updateSuccess = function (data) {
@@ -51,5 +62,7 @@ module.exports = {
   createSuccess,
   failure,
   updateSuccess,
-  checkUser
+  updateFailure,
+  checkUser,
+  deleteSuccess
 }

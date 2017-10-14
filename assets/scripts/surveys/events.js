@@ -37,23 +37,29 @@ const onShowSuccess = (event) => {
   const data = getFormFields(event.target)
   console.log('data is ', data)
   api.show(data)
-    .then(ui.createSuccess)
+  .then((data) => {
+    ui.getSuccess(data)
+    ui.checkUser(data)
+  })
     .catch(ui.failure)
 }
 
-const onDestroySuccess = (event) => {
+const onDestroySurvey = function (event) {
   event.preventDefault()
   const surveyId = store.surveyId
-  console.log('data is ', data)
-  api.destroy(surveyId, data)
-    .then(ui.createSuccess)
+  console.log('id is ', surveyId)
+  api.destroy(surveyId)
+    .then(ui.deleteSuccess)
     .catch(ui.failure)
 }
 
 const onRefresh = (event) => {
   event.preventDefault()
   api.index()
-  .then(ui.getSuccess)
+  .then((data) => {
+    ui.getSuccess(data)
+    ui.checkUser(data)
+  })
   .catch(ui.failure)
 }
 const onClear = (event) => {
@@ -73,6 +79,9 @@ const addHandlers = () => {
   $('#update-survey').on('submit', onUpdateSuccess)
   $('.refresh-surveys').on('click', onRefresh)
   $('.clear-surveys').on('click', onClear)
+  // $('.delete-survey').on('click', onDestroySurvey)
+  $('.feed').on('click', '.delete-survey', onDestroySurvey)
+  // $(`[data-id="${data.surveys.id}"].delete-survey`).on('click', onDestroySurvey)
 }
 module.exports = {
   addHandlers
