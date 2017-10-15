@@ -12,6 +12,7 @@ const getSuccess = function(data) {
   })
   $('.feed').append(showSurveyHTML)
   $('.edits-survey').on('click', onEditSurvey)
+  $('.vote').on('click', onVote)
 
   // checkUser(data)
 }
@@ -87,11 +88,17 @@ const onSurveyEdit = function(surveyId, surveyTitle, question, response1, respon
     }
   }
 
-  api.update(surveyId, data)
+  api.updateResults(surveyId, data)
     .then(editSuccess)
     .catch(failure)
 }
 
+// increment accumulator for selected vote and submit patch request
+const onVote = function() {
+  console.log(this)
+  const answerOneSelect = $(this).siblings()[3].html()
+  console.log(answerOneSelect)
+}
 // <-----  edit survey event for showing form ---->
 
 const createSuccess = function(data) {

@@ -22,6 +22,16 @@ const update = function (surveyId, data) {
     data
   })
 }
+const updateResults = function (surveyId, data) {
+  return $.ajax({
+    url: config.apiOrigin + '/surveys/' + surveyId,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data
+  })
+}
 const index = function () {
   return $.ajax({
     url: config.apiOrigin + '/surveys',
