@@ -29,11 +29,10 @@ As a user I want to be able to delete my own survey so I can get rid of surveys 
 
 WIREFRAME
 
+((https://imgur.com/LAxpkvt))
+
 ROADBLOCKS
 Creating a survey
 When we were creating the survey we were trying to pass through the entire survey with questions and answers on our form. We weren't able to access our responses even though they looked like they were being passed through correctly and we'd done it succesfully before with our cURL script. We weren't sure why this wasn't possbile until Chris remembered that we'd structured our model and our cURL script to create the survey question first, and then PATCH the survey answers after. We then encounted another problem where we had a 500 Internal Server Error when we tried to PATCH the answers after creating the survey. With the help of A-aron we found out that this was a problem with our back end Survey Controller console.logging undefined variables that we didn't need. Once we removed those console.logs we solved our PATCH and could completely create a survey.
 
-Using Handlebars on our nested models and using the right jQuery Selectors
-
-
-UNSOLVED PROBLEMS
+Using Handlebars on our nested models and using the right jQuery Selectors was really difficult. We found out that we had to run each on each item in the survey object and created partials and separate handlebars templates. We then had to refactor it to appear on the same handlebars page when we couldn't access them for our patch.
