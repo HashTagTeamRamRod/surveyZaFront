@@ -63,11 +63,11 @@ const onViewResults = function (event) {
 const onRefresh = (event) => {
   event.preventDefault()
   api.index()
-  .then((data) => {
-    ui.getSuccess(data)
-    ui.checkUser(data)
-  })
-  .catch(ui.failure)
+    .then((data) => {
+      ui.getSuccess(data)
+      ui.checkUser(data)
+    })
+    .catch(ui.failure)
 }
 const onClear = (event) => {
   event.preventDefault()
