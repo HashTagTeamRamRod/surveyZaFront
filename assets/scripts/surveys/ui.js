@@ -126,6 +126,16 @@ const editSuccess = function(event) {
     })
     .catch(editFailure)
 }
+const viewResultSuccess = function(event) {
+  $('#message').text('Results are in!').fadeIn().delay(4000).fadeOut()
+  $('.count').show()
+  $('.view-results').hide()
+  api.index()
+    .then((data) => {
+      getSuccess(data)
+      checkUser(data)
+    })
+}
 
 const deleteSuccess = function(event) {
   $('#message').text('Deleted survey!').fadeIn().delay(4000).fadeOut()
@@ -151,6 +161,10 @@ const editFailure = function(data) {
   console.log('error is', data)
   $('#message').text('Edit failed!').fadeIn().delay(4000).fadeOut()
 }
+const resultFailure = function(data) {
+  console.log('error is', data)
+  $('#message').text('Get results failed!').fadeIn().delay(4000).fadeOut()
+}
 
 const failure = (data) => {
   console.error(data)
@@ -163,5 +177,7 @@ module.exports = {
   updateSuccess,
   updateFailure,
   checkUser,
-  deleteSuccess
+  deleteSuccess,
+  viewResultSuccess,
+  resultFailure
 }

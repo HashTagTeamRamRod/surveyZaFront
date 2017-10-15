@@ -23,6 +23,9 @@ const signInSuccess = function (data) {
   $('#sign-out').show()
   $('#change-password').show()
   $('.creates').show()
+  $('.dash').show()
+  $('.feed-btns').show()
+  $('.get-surveys').show()
 }
 
 const changePasswordSuccess = function (data) {
@@ -40,6 +43,11 @@ const signOutSuccess = function () {
   $('#sign-up').show()
   $('#sign-in').show()
   $('#change-password').hide()
+  $('.feed').text(null)
+  $('.dash').hide()
+  $('.update-survey').hide()
+  $('.feed-btns').hide()
+  $('.get-surveys').hide()
 }
 
 const signUpFailure = function (data) {

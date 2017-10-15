@@ -52,6 +52,14 @@ const onDestroySurvey = function (event) {
     .catch(ui.failure)
 }
 
+const onViewResults = function (event) {
+  event.preventDefault()
+  const surveyId = $(this).attr('data-id')
+  api.show(surveyId)
+    .then(ui.viewResultSuccess)
+    .catch(ui.resultFailure)
+}
+
 const onRefresh = (event) => {
   event.preventDefault()
   api.index()
@@ -75,11 +83,16 @@ const addHandlers = () => {
   $('.creates').on('submit', onCreateSuccess)
   $('.creates').hide()
   $('.update-survey').hide()
+  $('.feed').text(null)
+  $('.dash').hide()
+  $('.feed-btns').hide()
+  $('.get-surveys').hide()
   $('#update-survey').on('submit', onUpdateSuccess)
   $('.refresh-surveys').on('click', onRefresh)
   $('.clear-surveys').on('click', onClear)
   // $('.delete-survey').on('click', onDestroySurvey)
   $('.feed').on('click', '.delete-survey', onDestroySurvey)
+  $('.feed').on('click', '.view-results', onViewResults)
   // $('.feed').on('click', '.edits-survey', onEditSurvey)
   // $(`[data-id="${data.surveys.id}"].delete-survey`).on('click', onDestroySurvey)
 }
