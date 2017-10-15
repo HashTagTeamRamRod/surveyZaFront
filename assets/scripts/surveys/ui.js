@@ -47,7 +47,7 @@ const onEditSurvey = function(event) {
   const surveyTitle = $(this).siblings()[0]
   const question = $(this).siblings()[1]
   const response1 = $(this).siblings()[3]
-  const response2 = $(this).siblings()[5]
+  const response2 = $(this).siblings()[6]
   console.log(surveyTitle)
   console.log(question)
   console.log(response1)
