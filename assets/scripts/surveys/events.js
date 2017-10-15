@@ -22,6 +22,16 @@ const onCreateSuccess = (event) => {
     .catch(ui.failure)
 }
 
+const onVote = function (event) {
+  event.preventDefault()
+  const answer = getFormFields(event.target)
+  const id = $(this).attr('data-id')
+  api.updateVote(id, answer)
+    .then(ui.voteSuccess)
+    .catch(ui.failure)
+
+}
+
 const onUpdateSuccess = (event) => {
   event.preventDefault()
   const data = getFormFields(event.target)
@@ -37,28 +47,23 @@ const onShowSuccess = (event) => {
   const data = getFormFields(event.target)
   console.log('data is ', data)
   api.show(data)
-  .then((data) => {
-    ui.getSuccess(data)
-    ui.checkUser(data)
-  })
+    .then(ui.createSuccess)
     .catch(ui.failure)
 }
 
-const onDestroySurvey = function (event) {
+const onDestroySuccess = (event) => {
   event.preventDefault()
-  const surveyId = $(this).attr('data-id')
-  api.destroy(surveyId)
-    .then(ui.deleteSuccess)
+  const surveyId = store.surveyId
+  console.log('data is ', data)
+  api.destroy(surveyId, data)
+    .then(ui.createSuccess)
     .catch(ui.failure)
 }
 
 const onRefresh = (event) => {
   event.preventDefault()
   api.index()
-  .then((data) => {
-    ui.getSuccess(data)
-    ui.checkUser(data)
-  })
+  .then(ui.getSuccess)
   .catch(ui.failure)
 }
 const onClear = (event) => {
@@ -78,10 +83,6 @@ const addHandlers = () => {
   $('#update-survey').on('submit', onUpdateSuccess)
   $('.refresh-surveys').on('click', onRefresh)
   $('.clear-surveys').on('click', onClear)
-  // $('.delete-survey').on('click', onDestroySurvey)
-  $('.feed').on('click', '.delete-survey', onDestroySurvey)
-  // $('.feed').on('click', '.edits-survey', onEditSurvey)
-  // $(`[data-id="${data.surveys.id}"].delete-survey`).on('click', onDestroySurvey)
 }
 module.exports = {
   addHandlers

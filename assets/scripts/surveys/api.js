@@ -32,6 +32,8 @@ const updateResults = function (surveyId, data) {
     data
   })
 }
+$('ddsf').on('click', () => {})
+
 const index = function () {
   return $.ajax({
     url: config.apiOrigin + '/surveys',
