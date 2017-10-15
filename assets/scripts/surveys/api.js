@@ -2,7 +2,7 @@
 const config = require('../config')
 const store = require('../store')
 
-const create = function (data) {
+const create = function(data) {
   return $.ajax({
     url: config.apiOrigin + '/surveys',
     method: 'POST',
@@ -12,7 +12,7 @@ const create = function (data) {
     data
   })
 }
-const update = function (surveyId, data) {
+const update = function(surveyId, data) {
   return $.ajax({
     url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'PATCH',
@@ -22,17 +22,56 @@ const update = function (surveyId, data) {
     data
   })
 }
-const updateResults = function (surveyId, data) {
+const updateResults = function(surveyId, answer, data) {
+  console.log('data is', data)
+  let answer1count
+  let answer2count
+  const answer1 = data.survey.questions[0].responses[0].answer1
+  const answer2 = data.survey.questions[0].responses[0].answer2
+  console.log('answer1 is ', answer1)
+  console.log('answer2 is ', answer2)
+  console.log(answer)
+  if (answer === answer1) {
+    answer1count++
+    return $.ajax({
+        url: config.apiOrigin + '/surveys/' + surveyId,
+        method: 'PATCH',
+        headers: {
+          Authorization: 'Token token=' + store.user.token
+        },
+        data: {
+          surveys: {
+            questions: {
+              responses: {
+                answer1count: answer1count
+              }
+            }
+          }
+        }
+    })
+    } else if (answer === answer2) {
+  answer2count++
   return $.ajax({
-    url: config.apiOrigin + '/surveys/' + surveyId,
-    method: 'PATCH',
-    headers: {
-      Authorization: 'Token token=' + store.user.token
-    },
-    data
+      url: config.apiOrigin + '/surveys/' + surveyId,
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Token token=' + store.user.token
+      },
+      data: {
+        surveys: {
+          questions: {
+            responses: {
+              answer2count: answer2count
+            }
+          }
+        }
+    }
   })
 }
-const index = function () {
+}
+
+
+const index = function() {
   return $.ajax({
     url: config.apiOrigin + '/surveys',
     method: 'GET',
@@ -41,13 +80,13 @@ const index = function () {
     }
   })
 }
-const show = function (id) {
+const show = function(surveyId) {
   return $.ajax({
-    url: config.apiOrigin + '/surveys/' + store.user.id,
+    url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'GET'
   })
 }
-const destroy = function (surveyId) {
+const destroy = function(surveyId) {
   return $.ajax({
     url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'DELETE',
@@ -61,5 +100,6 @@ module.exports = {
   update,
   index,
   show,
-  destroy
+  destroy,
+  updateResults
 }

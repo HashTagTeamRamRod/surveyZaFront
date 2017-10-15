@@ -16,6 +16,18 @@ const getSuccess = function(data) {
 
   // checkUser(data)
 }
+
+const onVote = function(event) {
+  event.preventDefault()
+  // let answer = null
+  const surveyId = $(this).attr('data-id')
+  const answer = $('input[name="answer"]:checked').val()
+  api.show(surveyId)
+    .then((data) => {
+      api.updateResults(surveyId, answer, data)
+    })
+}
+
 const checkUser = function(data) {
   const userId = store.user.id
   for (let i = 0; i < data.surveys.length; i++) {
@@ -88,17 +100,13 @@ const onSurveyEdit = function(surveyId, surveyTitle, question, response1, respon
     }
   }
 
-  api.updateResults(surveyId, data)
+  api.update(surveyId, data)
     .then(editSuccess)
     .catch(failure)
 }
 
 // increment accumulator for selected vote and submit patch request
-const onVote = function() {
-  console.log(this)
-  const answerOneSelect = $(this).siblings()[3].html()
-  console.log(answerOneSelect)
-}
+
 // <-----  edit survey event for showing form ---->
 
 const createSuccess = function(data) {
