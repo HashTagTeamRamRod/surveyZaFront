@@ -54,7 +54,7 @@ const onEditSurvey = function(event) {
   console.log(response2)
   const surveyId = $(this).attr('data-id')
   console.log(surveyId)
-  surveyTitle.contentEditable = true
+  surveyTitle.contentEditable = false
   question.contentEditable = true
   response1.contentEditable = true
   response2.contentEditable = true
@@ -65,7 +65,7 @@ const onEditSurvey = function(event) {
   $(this).parent().append('<button class="edit-survey">Confirm Edit</button>')
   $(this).parent().append('<button class="edit-cancel">Cancel Edit</button>')
 
-  $('.edit-cancel').on('click', function(event) {
+  $('.edit-cancel').on('click', function (event) {
     // clearTable()
     $(this).parent().parent().append()
     $('.edit-cancel').hide()
@@ -82,7 +82,7 @@ const onEditSurvey = function(event) {
   })
 }
 
-const onSurveyEdit = function(surveyId, surveyTitle, question, response1, response2) {
+const onSurveyEdit = function (surveyId, surveyTitle, question, response1, response2) {
   // const surveyId = $(this).attr('data-id')
   const newTitle = $(surveyTitle).html()
   const newQuestion = $(question).html()
@@ -117,9 +117,10 @@ const createSuccess = function(data) {
   store.surveyId = surveyId
   $('#create-submit').hide()
   $('.update-survey').show()
+  $('.creates').trigger('reset')
 }
 
-const editSuccess = function(event) {
+const editSuccess = function (event) {
   $('#message').text('Updated survey!').fadeIn().delay(4000).fadeOut()
   api.index()
     .then((data) => {
@@ -128,7 +129,7 @@ const editSuccess = function(event) {
     })
     .catch(editFailure)
 }
-const viewResultSuccess = function(event) {
+const viewResultSuccess = function (event) {
   $('#message').text('Results are in!').fadeIn().delay(4000).fadeOut()
   $('.count').show()
   $('.view-results').hide()
@@ -139,7 +140,7 @@ const viewResultSuccess = function(event) {
     })
 }
 
-const deleteSuccess = function(event) {
+const deleteSuccess = function (event) {
   $('#message').text('Deleted survey!').fadeIn().delay(4000).fadeOut()
   api.index()
     .then((data) => {
@@ -149,7 +150,7 @@ const deleteSuccess = function(event) {
     .catch(updateFailure)
 }
 
-const updateSuccess = function(data) {
+const updateSuccess = function (data) {
   console.log('this is ui', data)
   $('#message').text('Survey added!').fadeIn().delay(4000).fadeOut()
   $('#create-submit').show()
@@ -158,16 +159,16 @@ const updateSuccess = function(data) {
   $('#create-a-survey').trigger("reset")
 }
 
-const updateFailure = function(data) {
+const updateFailure = function (data) {
   console.log('error is', data)
   $('#message').text('Update failed!').fadeIn().delay(4000).fadeOut()
 }
 
-const editFailure = function(data) {
+const editFailure = function (data) {
   console.log('error is', data)
   $('#message').text('Edit failed!').fadeIn().delay(4000).fadeOut()
 }
-const resultFailure = function(data) {
+const resultFailure = function (data) {
   console.log('error is', data)
   $('#message').text('Get results failed!').fadeIn().delay(4000).fadeOut()
 }
