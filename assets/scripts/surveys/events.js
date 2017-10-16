@@ -16,7 +16,7 @@ const onGetSuccess = (event) => {
 const onCreateSuccess = (event) => {
   event.preventDefault()
   const data = getFormFields(event.target)
-  console.log('data is ', data)
+  // console.log('data is ', data)
   api.create(data)
     .then(ui.createSuccess)
     .catch(ui.failure)
@@ -25,7 +25,7 @@ const onCreateSuccess = (event) => {
 const onUpdateSuccess = (event) => {
   event.preventDefault()
   const data = getFormFields(event.target)
-  console.log(data)
+  // console.log(data)
   const surveyId = store.surveyId
   api.update(surveyId, data)
     .then(ui.updateSuccess)
@@ -35,12 +35,12 @@ const onUpdateSuccess = (event) => {
 const onShowSuccess = (event) => {
   event.preventDefault()
   const data = getFormFields(event.target)
-  console.log('data is ', data)
+  // console.log('data is ', data)
   api.show(data)
-  .then((data) => {
-    ui.getSuccess(data)
-    ui.checkUser(data)
-  })
+    .then((data) => {
+      ui.getSuccess(data)
+      ui.checkUser(data)
+    })
     .catch(ui.failure)
 }
 

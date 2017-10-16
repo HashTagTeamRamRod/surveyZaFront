@@ -2,7 +2,7 @@
 const config = require('../config')
 const store = require('../store')
 
-const create = function(data) {
+const create = function (data) {
   return $.ajax({
     url: config.apiOrigin + '/surveys',
     method: 'POST',
@@ -12,7 +12,7 @@ const create = function(data) {
     data
   })
 }
-const update = function(surveyId, data) {
+const update = function (surveyId, data) {
   return $.ajax({
     url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'PATCH',
@@ -22,41 +22,41 @@ const update = function(surveyId, data) {
     data
   })
 }
-const updateResults = function(surveyId, answer, data) {
-  console.log('data is', data)
+const updateResults = function (surveyId, answer, data) {
+  // console.log('data is', data)
   const content = data.survey.questions[0].content
   const answer1 = data.survey.questions[0].responses[0].answer1
   const answer2 = data.survey.questions[0].responses[0].answer2
   let answer1Count = data.survey.questions[0].responses[0].answer1Count
   let answer2Count = data.survey.questions[0].responses[0].answer2Count
-  console.log('answer1 is ', answer1)
-  console.log('answer2 is ', answer2)
-  console.log(answer)
+  // console.log('answer1 is ', answer1)
+  // console.log('answer2 is ', answer2)
+  // console.log(answer)
   if (answer === answer1) {
     answer1Count++
     return $.ajax({
-        url: config.apiOrigin + '/surveys/' + surveyId,
-        method: 'PATCH',
-        headers: {
-          Authorization: 'Token token=' + store.user.token
-        },
-        data: {
-          surveys: {
-            questions: {
-              content,
-              responses: {
-                answer1,
-                answer1Count: answer1Count,
-                answer2,
-                answer2Count
-              }
+      url: config.apiOrigin + '/surveys/' + surveyId,
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Token token=' + store.user.token
+      },
+      data: {
+        surveys: {
+          questions: {
+            content,
+            responses: {
+              answer1,
+              answer1Count: answer1Count,
+              answer2,
+              answer2Count
             }
           }
         }
+      }
     })
-    } else if (answer === answer2) {
-  answer2Count++
-  return $.ajax({
+  } else if (answer === answer2) {
+    answer2Count++
+    return $.ajax({
       url: config.apiOrigin + '/surveys/' + surveyId,
       method: 'PATCH',
       headers: {
@@ -74,13 +74,12 @@ const updateResults = function(surveyId, answer, data) {
             }
           }
         }
-    }
-  })
-}
+      }
+    })
+  }
 }
 
-
-const index = function() {
+const index = function () {
   return $.ajax({
     url: config.apiOrigin + '/surveys',
     method: 'GET',
@@ -89,13 +88,13 @@ const index = function() {
     }
   })
 }
-const show = function(surveyId) {
+const show = function (surveyId) {
   return $.ajax({
     url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'GET'
   })
 }
-const destroy = function(surveyId) {
+const destroy = function (surveyId) {
   return $.ajax({
     url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'DELETE',

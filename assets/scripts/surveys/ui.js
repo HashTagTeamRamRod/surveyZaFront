@@ -3,10 +3,10 @@ const createSurveyTemplate = require('../templates/helpers/makesurvey.handlebars
 const store = require('../store')
 const api = require('./api')
 
-const getSuccess = function(data) {
+const getSuccess = function (data) {
   $('.feed').text(null)
-  console.log('data is ', data)
-  console.log(store.user.id)
+  // console.log('data is ', data)
+  // console.log(store.user.id)
   const showSurveyHTML = showSurveyTemplate({
     surveys: data.surveys
   })
@@ -17,7 +17,7 @@ const getSuccess = function(data) {
   // checkUser(data)
 }
 
-const onVote = function(event) {
+const onVote = function (event) {
   event.preventDefault()
   // let answer = null
   const surveyId = $(this).attr('data-id')
@@ -26,9 +26,11 @@ const onVote = function(event) {
     .then((data) => {
       api.updateResults(surveyId, answer, data)
     })
+    .then(voteSuccess)
+    .catch(voteFailure)
 }
 
-const checkUser = function(data) {
+const checkUser = function (data) {
   const userId = store.user.id
   for (let i = 0; i < data.surveys.length; i++) {
     if (data.surveys[i]._owner === userId) {
@@ -42,18 +44,20 @@ const checkUser = function(data) {
 }
 
 // <-----  edit survey event for showing form ---->
-const onEditSurvey = function(event) {
+const onEditSurvey = function (event) {
   event.preventDefault()
   const surveyTitle = $(this).siblings()[0]
   const question = $(this).siblings()[1]
   const response1 = $(this).siblings()[3]
   const response2 = $(this).siblings()[8]
-  console.log(surveyTitle)
-  console.log(question)
-  console.log(response1)
-  console.log(response2)
+  let answer1Count = $(this).siblings()[5]
+  let answer2Count = $(this).siblings()[9]
+  // console.log(surveyTitle)
+  // console.log(question)
+  // console.log(response1)
+  // console.log(response2)
   const surveyId = $(this).attr('data-id')
-  console.log(surveyId)
+  // console.log(surveyId)
   surveyTitle.contentEditable = false
   question.contentEditable = true
   response1.contentEditable = true
@@ -77,17 +81,19 @@ const onEditSurvey = function(event) {
       })
       .catch(failure)
   })
-  $('.edit-survey').on('click', function(event) {
-    onSurveyEdit(surveyId, surveyTitle, question, response1, response2)
+  $('.edit-survey').on('click', function (event) {
+    onSurveyEdit(surveyId, surveyTitle, question, response1, response2, answer1Count, answer2Count)
   })
 }
 
-const onSurveyEdit = function (surveyId, surveyTitle, question, response1, response2) {
+const onSurveyEdit = function (surveyId, surveyTitle, question, response1, response2, answer1Count, answer2Count) {
   // const surveyId = $(this).attr('data-id')
   const newTitle = $(surveyTitle).html()
   const newQuestion = $(question).html()
   const newResponse1 = $(response1).html()
   const newResponse2 = $(response2).html()
+  answer1Count = $(answer1Count).html()
+  answer2Count = $(answer2Count).html()
   const data = {
     surveys: {
       title: newTitle,
@@ -109,15 +115,19 @@ const onSurveyEdit = function (surveyId, surveyTitle, question, response1, respo
 // increment accumulator for selected vote and submit patch request
 
 // <-----  edit survey event for showing form ---->
+const voteSuccess = function (event) {
+  $('#message').text('Way to get out there and vote!').fadeIn().delay(4000).fadeOut()
+}
 
-const createSuccess = function(data) {
-  console.log('id is ', data.survey._id)
+const createSuccess = function (data) {
+  // console.log('id is ', data.survey._id)
   // $('.dash').text(null)
   const surveyId = data.survey._id
   store.surveyId = surveyId
   $('#create-submit').hide()
   $('.update-survey').show()
   $('.creates').trigger('reset')
+  $('#message').text('Survey created, title cannot be changed!').fadeIn().delay(4000).fadeOut()
 }
 
 const editSuccess = function (event) {
@@ -151,26 +161,30 @@ const deleteSuccess = function (event) {
 }
 
 const updateSuccess = function (data) {
-  console.log('this is ui', data)
+  // console.log('this is ui', data)
   $('#message').text('Survey added!').fadeIn().delay(4000).fadeOut()
   $('#create-submit').show()
-  $('#update-survey').trigger("reset")
+  $('#update-survey').trigger('reset')
   $('.update-survey').hide()
-  $('#create-a-survey').trigger("reset")
+  $('#create-a-survey').trigger('reset')
 }
 
 const updateFailure = function (data) {
-  console.log('error is', data)
+  // console.log('error is', data)
   $('#message').text('Update failed!').fadeIn().delay(4000).fadeOut()
 }
 
 const editFailure = function (data) {
-  console.log('error is', data)
+  // console.log('error is', data)
   $('#message').text('Edit failed!').fadeIn().delay(4000).fadeOut()
 }
 const resultFailure = function (data) {
-  console.log('error is', data)
+  // console.log('error is', data)
   $('#message').text('Get results failed!').fadeIn().delay(4000).fadeOut()
+}
+
+const voteFailure = function (event) {
+  $('#message').text('Vote fail!').fadeIn().delay(4000).fadeOut()
 }
 
 const failure = (data) => {
@@ -186,5 +200,7 @@ module.exports = {
   checkUser,
   deleteSuccess,
   viewResultSuccess,
-  resultFailure
+  resultFailure,
+  voteSuccess,
+  voteFailure
 }
