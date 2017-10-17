@@ -1,7 +1,8 @@
 const showSurveyTemplate = require('../templates/helpers/surveys.handlebars')
-const createSurveyTemplate = require('../templates/helpers/makesurvey.handlebars')
+// const createSurveyTemplate = require('../templates/helpers/makesurvey.handlebars')
 const store = require('../store')
 const api = require('./api')
+// const events = require('./events')
 
 const getSuccess = function (data) {
   $('.feed').text(null)
@@ -13,7 +14,7 @@ const getSuccess = function (data) {
   $('.feed').append(showSurveyHTML)
   $('.edits-survey').on('click', onEditSurvey)
   $('.vote').on('click', onVote)
-
+  $('.vote-tally').hide()
   // checkUser(data)
 }
 
@@ -22,9 +23,12 @@ const onVote = function (event) {
   // let answer = null
   const surveyId = $(this).attr('data-id')
   const answer = $('input[name="answer"]:checked').val()
+  console.log('THE ANSWER IS ', answer)
+  // const count = $('p[name="count"]:checked').val()
+  // console.log('count is ', count)
   api.show(surveyId)
     .then((data) => {
-      api.updateResults(surveyId, answer, data)
+      return api.updateResults(surveyId, answer, data)
     })
     .then(voteSuccess)
     .catch(voteFailure)
@@ -50,8 +54,8 @@ const onEditSurvey = function (event) {
   const question = $(this).siblings()[1]
   const response1 = $(this).siblings()[3]
   const response2 = $(this).siblings()[8]
-  let answer1Count = $(this).siblings()[5]
-  let answer2Count = $(this).siblings()[9]
+  // let answer1Count = $(this).siblings()[5]
+  // let answer2Count = $(this).siblings()[9]
   // console.log(surveyTitle)
   // console.log(question)
   // console.log(response1)
@@ -82,18 +86,18 @@ const onEditSurvey = function (event) {
       .catch(failure)
   })
   $('.edit-survey').on('click', function (event) {
-    onSurveyEdit(surveyId, surveyTitle, question, response1, response2, answer1Count, answer2Count)
+    onSurveyEdit(surveyId, surveyTitle, question, response1, response2)
   })
 }
 
-const onSurveyEdit = function (surveyId, surveyTitle, question, response1, response2, answer1Count, answer2Count) {
+const onSurveyEdit = function (surveyId, surveyTitle, question, response1, response2) {
   // const surveyId = $(this).attr('data-id')
   const newTitle = $(surveyTitle).html()
   const newQuestion = $(question).html()
   const newResponse1 = $(response1).html()
   const newResponse2 = $(response2).html()
-  answer1Count = $(answer1Count).html()
-  answer2Count = $(answer2Count).html()
+  // answer1Count = $(answer1Count).html()
+  // answer2Count = $(answer2Count).html()
   const data = {
     surveys: {
       title: newTitle,
@@ -116,7 +120,17 @@ const onSurveyEdit = function (surveyId, surveyTitle, question, response1, respo
 
 // <-----  edit survey event for showing form ---->
 const voteSuccess = function (event) {
-  $('#message').text('Way to get out there and vote!').fadeIn().delay(4000).fadeOut()
+  api.index()
+    .then((data) => {
+      getSuccess(data)
+      checkUser(data)
+      console.log('check user ', checkUser(data))
+    })
+    .then(() => {
+      $('#message').text('Way to get out there and vote!').fadeIn().delay(4000).fadeOut()
+      $('.vote-tally').show()
+    })
+    .catch(updateFailure)
 }
 
 const createSuccess = function (data) {
@@ -140,14 +154,16 @@ const editSuccess = function (event) {
     .catch(editFailure)
 }
 const viewResultSuccess = function (event) {
+  // const surveyId = event.survey.id
+  // console.log('id is ', surveyId)
   $('#message').text('Results are in!').fadeIn().delay(4000).fadeOut()
-  $('.count').show()
-  $('.view-results').hide()
-  api.index()
-    .then((data) => {
-      getSuccess(data)
-      checkUser(data)
-    })
+  $('.vote-tally').show()
+  // api.show(surveyId)
+  // api.index()
+  //   .then((data) => {
+  //     getSuccess(data)
+  //     checkUser(data)
+  //   })
 }
 
 const deleteSuccess = function (event) {

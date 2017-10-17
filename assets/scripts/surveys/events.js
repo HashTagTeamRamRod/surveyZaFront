@@ -93,6 +93,7 @@ const addHandlers = () => {
   // $('.delete-survey').on('click', onDestroySurvey)
   $('.feed').on('click', '.delete-survey', onDestroySurvey)
   $('.feed').on('click', '.view-results', onViewResults)
+  $('.reset').on('click', onRefresh)
   // $('.feed').on('click', '.edits-survey', onEditSurvey)
   // $(`[data-id="${data.surveys.id}"].delete-survey`).on('click', onDestroySurvey)
 }

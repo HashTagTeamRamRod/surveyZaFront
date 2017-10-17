@@ -24,6 +24,7 @@ const update = function (surveyId, data) {
 }
 const updateResults = function (surveyId, answer, data) {
   // console.log('data is', data)
+  console.log('answer is ', answer)
   const content = data.survey.questions[0].content
   const answer1 = data.survey.questions[0].responses[0].answer1
   const answer2 = data.survey.questions[0].responses[0].answer2
