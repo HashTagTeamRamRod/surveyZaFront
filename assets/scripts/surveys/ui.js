@@ -23,7 +23,7 @@ const onVote = function (event) {
   // let answer = null
   const surveyId = $(this).attr('data-id')
   const answer = $('input[name="answer"]:checked').val()
-  console.log('THE ANSWER IS ', answer)
+  // console.log('THE ANSWER IS ', answer)
   // const count = $('p[name="count"]:checked').val()
   // console.log('count is ', count)
   api.show(surveyId)
@@ -128,7 +128,7 @@ const voteSuccess = function (event) {
     })
     .then(() => {
       $('#message').text('Way to get out there and vote!').fadeIn().delay(4000).fadeOut()
-      $('.vote-tally').show()
+      // $('.vote-tally').show()
     })
     .catch(updateFailure)
 }
@@ -153,11 +153,28 @@ const editSuccess = function (event) {
     })
     .catch(editFailure)
 }
-const viewResultSuccess = function (event) {
-  // const surveyId = event.survey.id
-  // console.log('id is ', surveyId)
-  $('#message').text('Results are in!').fadeIn().delay(4000).fadeOut()
-  $('.vote-tally').show()
+const viewResultSuccess = function (data) {
+  console.log('data is ', data)
+  console.log('EVENT IS ', data.survey.questions[0].responses[0].answer1Count)
+  console.log('EVENT IS ', data.survey.questions[0].responses[0].answer2Count)
+  const surveyId = data.survey.id
+  console.log('id is ', surveyId)
+  // event.survey.questions[0].responses[0].answer1Count.val()
+  // event.survey.questions[0].responses[0].answer2Count.val()
+  // for (let i = 0; i < data.surveys.length; i++) {
+  //   if (data.survey.id === surveyId) {
+  //     $(`[data-id="${data.survey.id}"].vote-tally`).show()
+  //   // } else {
+  //   //   $(`[data-id="${data.survey.id}"].vote-tally`).hide()
+  //   // }
+  // }
+  // if (surveyId === event.survey.id) {
+  //   $('.vote-tally').show()
+  // } else {
+  //   $('.vote-tally').hide()
+  // }
+  // $('#message').text('Results are in!').fadeIn().delay(4000).fadeOut()
+  // $('.vote-tally').show()
   // api.show(surveyId)
   // api.index()
   //   .then((data) => {

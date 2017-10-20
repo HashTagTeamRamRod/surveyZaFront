@@ -54,9 +54,22 @@ const onDestroySurvey = function (event) {
 
 const onViewResults = function (event) {
   event.preventDefault()
+  // console.log(survey.id)
   const surveyId = $(this).attr('data-id')
+  console.log('Survey Id is ', surveyId)
+  // $('.vote-tally[data-id="surveyId"]').show()
+  // const showButton = event.target
+  // console.log('show button is ', showButton)
+  // $(this).attr('data-id')
+  // if ($(this).attr('data-id') === surveyId) {
+  // $(`[data-id="${event.survey.id}"].vote-tally`).show()
   api.show(surveyId)
-    .then(ui.viewResultSuccess)
+    .then((data) => {
+      ui.viewResultSuccess(data)
+      // $(`[data-id="${data.count.id}"].vote-tally`).show()
+      $('.vote-tally[data-id="surveyId"]').show()
+      console.log('console data is ', data)
+    })
     .catch(ui.resultFailure)
 }
 
