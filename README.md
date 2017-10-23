@@ -16,6 +16,8 @@ Javascript
 jQuery
 Handlebars
 
+### DESCRIPTION
+SurveyZa is a web app with authentication that allows users to create, edit and vote on surveys. All users can vote and view the results of surveys, regardless of ownership. Front-end was created using HTML, JavaScript and Handlebars. The back-end was created using MongoDB, Mongoose and Express.
 
 ### USER STORIES
 As an unregistered user, I would like to be able to sign up with an email, password, and password confirmation, so that I can sign in.
