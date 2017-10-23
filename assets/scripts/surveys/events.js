@@ -94,6 +94,7 @@ const addHandlers = () => {
   $('.creates').on('submit', onCreateSuccess)
   $('.creates').hide()
   $('.update-survey').hide()
+  $('.feed').hide()
   $('.feed').text(null)
   $('.dash').hide()
   $('.feed-btns').hide()

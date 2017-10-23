@@ -6,6 +6,7 @@ const api = require('./api')
 
 const getSuccess = function (data) {
   $('.feed').text(null)
+  $('.feed').show()
   // console.log('data is ', data)
   // console.log(store.user.id)
   const showSurveyHTML = showSurveyTemplate({
@@ -140,6 +141,7 @@ const createSuccess = function (data) {
   store.surveyId = surveyId
   $('#create-submit').hide()
   $('.update-survey').show()
+  $('#new_title').attr('disabled', true)
   $('.creates').trigger('reset')
   $('#message').text('Survey created, title cannot be changed!').fadeIn().delay(4000).fadeOut()
 }
@@ -196,6 +198,7 @@ const deleteSuccess = function (event) {
 const updateSuccess = function (data) {
   // console.log('this is ui', data)
   $('#message').text('Survey added!').fadeIn().delay(4000).fadeOut()
+  $('#new_title').attr('disabled', false)
   $('#create-submit').show()
   $('#update-survey').trigger('reset')
   $('.update-survey').hide()
