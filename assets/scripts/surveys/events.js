@@ -54,9 +54,20 @@ const onDestroySurvey = function (event) {
 
 const onViewResults = function (event) {
   event.preventDefault()
+  // console.log(survey.id)
   const surveyId = $(this).attr('data-id')
+  console.log('Survey Id is ', surveyId)
+  const ans1 = $(this).siblings()[5]
+  const ans2 = $(this).siblings()[10]
+  $(ans1).show()
+  $(ans2).show()
   api.show(surveyId)
-    .then(ui.viewResultSuccess)
+    .then((data) => {
+      ui.viewResultSuccess(data)
+      // $(`[data-id="${data.count.id}"].vote-tally`).show()
+      // $('.vote-tally[data-id="surveyId"]').show()
+      console.log('console data is ', data)
+    })
     .catch(ui.resultFailure)
 }
 
@@ -83,6 +94,7 @@ const addHandlers = () => {
   $('.creates').on('submit', onCreateSuccess)
   $('.creates').hide()
   $('.update-survey').hide()
+  $('.feed').hide()
   $('.feed').text(null)
   $('.dash').hide()
   $('.feed-btns').hide()

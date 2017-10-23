@@ -5,9 +5,9 @@
       <h4>{{question.content}}</h4>
       {{#each question.responses as |response|}}
         <input type="radio" name="answer" value="{{response.answer1}}"><h5>{{response.answer1}}</h5>
-          <p type="text" class="count" name="answer1Count" value="{{response.answer1Count}}"><h5 class="vote-tally">Vote Tally:{{response.answer1Count}}</h5></p>
+          <p data-id="{{survey.id}}" type="text" class="count" name="answer1Count" value="{{response.answer1Count}}"><h5 class="vote-tally">Vote Tally:{{response.answer1Count}}</h5></p>
         <input type="radio" name="answer" value="{{response.answer2}}"><h5>{{response.answer2}}</h5>
-          <p type="text" class="count" name="answer2Count" value="{{response.answer2Count}}"><h5 class="vote-tally">Vote Tally:{{response.answer2Count}}</h5></p>
+          <p data-id="{{survey.id}}" type="text" class="count" name="answer2Count" value="{{response.answer2Count}}"><h5 class="vote-tally">Vote Tally:{{response.answer2Count}}</h5></p>
       {{/each}}
     {{/each}}
     <button data-id="{{survey.id}}" type="submit" class="vote">Vote</button>

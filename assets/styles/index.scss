@@ -2,8 +2,31 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 
 body {
-  background-image: url(https://drive.google.com/file/d/0B40BcAMbam60cktCNWVrREpONGc);
+  background-image: url('https://drive.google.com/uc?id=0B40BcAMbam60cktCNWVrREpONGc');
 }
-h1 {
-  color: purple;
+
+legend {
+  color: lemonChiffon;
+}
+
+h1, h3, h4, h5, h6 {
+  color: lemonChiffon;
+}
+
+
+.dash {
+  clear: right;
+  float: left;
+  width: 35%;
+  margin-top: -4px;
+}
+
+.feed {
+  border-radius: 15px 30px;
+  float: right;
+  height: 600px;
+  overflow: scroll;
+  width: 55%;
+  padding: 40px;
+  background-color: rgba(000, 000, 000, .7);
 }
