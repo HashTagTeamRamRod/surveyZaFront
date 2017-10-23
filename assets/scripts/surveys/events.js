@@ -56,7 +56,7 @@ const onViewResults = function (event) {
   event.preventDefault()
   // console.log(survey.id)
   const surveyId = $(this).attr('data-id')
-  console.log('Survey Id is ', surveyId)
+  // console.log('Survey Id is ', surveyId)
   const ans1 = $(this).siblings()[5]
   const ans2 = $(this).siblings()[10]
   $(ans1).show()
@@ -66,7 +66,7 @@ const onViewResults = function (event) {
       ui.viewResultSuccess(data)
       // $(`[data-id="${data.count.id}"].vote-tally`).show()
       // $('.vote-tally[data-id="surveyId"]').show()
-      console.log('console data is ', data)
+      // console.log('console data is ', data)
     })
     .catch(ui.resultFailure)
 }
