@@ -24,15 +24,19 @@ const onVote = function (event) {
   // let answer = null
   const surveyId = $(this).attr('data-id')
   const answer = $('input[name="answer"]:checked').val()
-  // console.log('THE ANSWER IS ', answer)
+  console.log('THE ANSWER IS ', answer)
   // const count = $('p[name="count"]:checked').val()
   // console.log('count is ', count)
+  if (answer !== undefined) {
   api.show(surveyId)
     .then((data) => {
       return api.updateResults(surveyId, answer, data)
     })
     .then(voteSuccess)
     .catch(voteFailure)
+  } else {
+    voteFailure()
+  }
 }
 
 const checkUser = function (data) {
