@@ -28,12 +28,12 @@ const onVote = function (event) {
   // const count = $('p[name="count"]:checked').val()
   // console.log('count is ', count)
   if (answer !== undefined) {
-  api.show(surveyId)
-    .then((data) => {
-      return api.updateResults(surveyId, answer, data)
-    })
-    .then(voteSuccess)
-    .catch(voteFailure)
+    api.show(surveyId)
+      .then((data) => {
+        return api.updateResults(surveyId, answer, data)
+      })
+      .then(voteSuccess)
+      .catch(voteFailure)
   } else {
     voteFailure()
   }
