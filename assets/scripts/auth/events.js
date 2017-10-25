@@ -5,10 +5,13 @@ const ui = require('./ui')
 const onSignUp = function (event) {
   event.preventDefault()
   const data = getFormFields(this)
-  // console.log(data)
-  api.signUp(data)
-    .then(ui.signUpSuccess)
-    .catch(ui.signUpFailure)
+  if (data.credentials.password === data.credentials.password_confirmation) {
+    api.signUp(data)
+      .then(ui.signUpSuccess)
+      .catch(ui.signUpFailure)
+  } else {
+    ui.signUpFailure()
+  }
 }
 const onSignIn = function (event) {
   const data = getFormFields(this)
