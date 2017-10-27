@@ -24,7 +24,6 @@ const onVote = function (event) {
   // let answer = null
   const surveyId = $(this).attr('data-id')
   const answer = $('input[name="answer"]:checked').val()
-  console.log('THE ANSWER IS ', answer)
   // const count = $('p[name="count"]:checked').val()
   // console.log('count is ', count)
   if (answer !== undefined) {
@@ -103,24 +102,27 @@ const onSurveyEdit = function (surveyId, surveyTitle, question, response1, respo
   const newResponse2 = $(response2).html()
   // answer1Count = $(answer1Count).html()
   // answer2Count = $(answer2Count).html()
-  const data = {
-    surveys: {
-      title: newTitle,
-      questions: {
-        content: newQuestion,
-        responses: {
-          answer1: newResponse1,
-          answer2: newResponse2
+  if (newQuestion !== '' && newResponse1 !== '' && newResponse2 !== '') {
+    const data = {
+      surveys: {
+        title: newTitle,
+        questions: {
+          content: newQuestion,
+          responses: {
+            answer1: newResponse1,
+            answer2: newResponse2
+          }
         }
       }
     }
+
+    api.update(surveyId, data)
+      .then(editSuccess)
+      .catch(editFailure)
+  } else {
+    editSurveyFailure()
   }
-
-  api.update(surveyId, data)
-    .then(editSuccess)
-    .catch(failure)
 }
-
 // increment accumulator for selected vote and submit patch request
 
 // <-----  edit survey event for showing form ---->
@@ -218,6 +220,11 @@ const editFailure = function (data) {
   // console.log('error is', data)
   $('#message').text('Edit failed!').fadeIn().delay(4000).fadeOut()
 }
+
+const editSurveyFailure = function (data) {
+  // console.log('error is', data)
+  $('#message').text('Input must have content!').fadeIn().delay(4000).fadeOut()
+}
 const resultFailure = function (data) {
   // console.log('error is', data)
   $('#message').text('Get results failed!').fadeIn().delay(4000).fadeOut()
@@ -242,5 +249,6 @@ module.exports = {
   viewResultSuccess,
   resultFailure,
   voteSuccess,
-  voteFailure
+  voteFailure,
+  editSurveyFailure
 }
