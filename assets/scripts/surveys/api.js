@@ -13,6 +13,11 @@ const create = function (data) {
   })
 }
 const update = function (surveyId, data) {
+  // console.log(data)
+  // const content = data.surveys.questions.content
+  // const answer1 = data.surveys.questions[0].responses.answer1
+  // const answer2 = data.surveys.questions[0].responses.answer2
+  // if (content !== '' && answer1 !== '' && answer2 !== '') {
   return $.ajax({
     url: config.apiOrigin + '/surveys/' + surveyId,
     method: 'PATCH',
