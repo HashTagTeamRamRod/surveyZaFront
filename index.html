@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>¡surveyZa!</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/html" href="./assets/styles/index.scss">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body class="container-fluid">
+      <h1>Welcome to ¡surveyZa!</h1>
+      <p id="message"></p>
+<!-- auth -->
+      <form id="sign-up" class="clearform">
+          <fieldset>
+            <legend>Sign Up!</legend>
+            <input name="credentials[email]" type="text" placeholder="Email address">
+            <input name="credentials[password]" type="password" placeholder="Password">
+            <input name="credentials[password_confirmation]" type="password" placeholder="Confirm Password">
+            <input type="submit" name="submit" value="Sign up!">
+          </fieldset>
+        </form>
+        <form id="sign-in" class="clearform">
+          <fieldset>
+            <legend>Sign In!</legend>
+            <input name="credentials[email]" type="text" placeholder="Email">
+            <input name="credentials[password]" type="password" placeholder="Password">
+            <input type="submit" name="submit" value="Sign in!">
+          </fieldset>
+        </form>
+        <form id="sign-out" class="clearform">
+          <fieldset>
+            <legend>Sign Out</legend>
+            <input type="submit" name="submit" value="Sign out">
+          </fieldset>
+        </form>
+        <form id="change-password" class="clearform">
+          <fieldset>
+            <legend>Change Password</legend>
+            <input type="password" name="passwords[old]" id="change-password-old" placeholder="Old Password">
+            <input type="password" name="passwords[new]" id="change-password-new" placeholder="New Password">
+            <input type="submit" name="submit" value="Change Password!">
+          </fieldset>
+        </form>
+
+
+        <button class="get-surveys">Get Surveys</button>
+        <!-- feed for all surveys on get or show -->
+    <div class="feed-btns">
+        <button class="refresh-surveys">Refresh Feed</button>
+        <button class="clear-surveys">Clear Feed</button>
+    </div>
+
+<div class="dash">
+<!-- form to make survey title -->
+<div class="creates">
+          <h4>Input title here to create a survey.</h4>
+        <form class="create-a-survey" id="create-a-survey">
+        <div class="form-group">
+          <input type="text" name="survey[title]" id="new_title" placeholder="Title" required><br>
+          <button type="submit" id="create-submit" class="btn btn-default">Submit!</button>
+        </div>
+        </form>
+      </div>
+<!-- form to update questions and answers -->
+<div class="update-survey">
+          <h4>Enter questions and answers.</h4>
+        <form class="auth" id="update-survey">
+        <div class="form-group">
+          <input type="text" name="surveys[questions][0][content]" id="new_question" placeholder="Question" required><br>
+          <input type="text" name="surveys[questions][0][responses][answer1]" id="new_answer1" placeholder="Answer 1" required><br>
+          <input type="text" name="surveys[questions][0][responses][answer2]" id="new_answer2" placeholder="Answer 2" required>
+          <input type="submit" class="btn btn-default">
+        </div>
+        </form>
+      </div>
+      </div>
+
+      <div class="feed">
+
+
+      </div>
+    </body>
+</html>
