@@ -235,7 +235,7 @@ const voteFailure = function (event) {
 }
 
 const failure = (data) => {
-  console.error(data)
+  // console.error(data)
 }
 
 module.exports = {
